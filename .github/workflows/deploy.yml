@@ -40,5 +40,5 @@ jobs:
           project: "8hf-lobe-chat-12"
           entrypoint: "jsr:@deno/nextjs-start"
           root: "."
-          include: .next, public
+          
           
