@@ -3,6 +3,10 @@
     "desc": "Add the current input as a user message without triggering generation",
     "title": "Add a User Message"
   },
+  "clearCurrentMessages": {
+    "desc": "Clear the messages and uploaded files from the current conversation",
+    "title": "Clear Conversation Messages"
+  },
   "editMessage": {
     "desc": "Enter edit mode by holding Alt and double-clicking the message",
     "title": "Edit Message"
@@ -14,6 +18,10 @@
   "openHotkeyHelper": {
     "desc": "View instructions for all keyboard shortcuts",
     "title": "Open Hotkey Help"
+  },
+  "openSettings": {
+    "desc": "Open the application settings page",
+    "title": "Application Settings"
   },
   "regenerateMessage": {
     "desc": "Regenerate the last message",
