@@ -1,5 +1,6 @@
 /* eslint-disable sort-keys-fix/sort-keys-fix, typescript-sort-keys/interface */
 // Disable the auto sort key eslint rule to make the code more logic and readable
+import { ChatErrorType } from '@lobechat/types/fetch';
 import { copyToClipboard } from '@lobehub/ui';
 import isEqual from 'fast-deep-equal';
 import { SWRResponse, mutate } from 'swr';
@@ -12,7 +13,6 @@ import { topicService } from '@/services/topic';
 import { traceService } from '@/services/trace';
 import { ChatStore } from '@/store/chat/store';
 import { messageMapKey } from '@/store/chat/utils/messageMapKey';
-import { ChatErrorType } from '@/types/fetch';
 import {
   ChatMessage,
   ChatMessageError,
@@ -25,7 +25,7 @@ import {
 import { ChatImageItem } from '@/types/message/image';
 import { GroundingSearch } from '@/types/search';
 import { TraceEventPayloads } from '@/types/trace';
-import { setNamespace } from '@/utils/storeDebug';
+import { Action, setNamespace } from '@/utils/storeDebug';
 import { nanoid } from '@/utils/uuid';
 
 import type { ChatStoreState } from '../../initialState';
@@ -130,7 +130,7 @@ export interface ChatMessageAction {
     key: keyof ChatStoreState,
     loading: boolean,
     id?: string,
-    action?: string,
+    action?: Action,
   ) => AbortController | undefined;
 }
 
