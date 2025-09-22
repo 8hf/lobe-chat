@@ -1,25 +1,5 @@
-import type { PartialDeep } from 'type-fest';
-
-import { ModelTokensUsage, ToolFunction } from '@/types/message';
-
-export interface MessageToolCall {
-  /**
-   * The function that the model called.
-   */
-  function: ToolFunction;
-
-  /**
-   * The ID of the tool call.
-   */
-  id: string;
-
-  /**
-   * The type of the tool. Currently, only `function` is supported.
-   */
-  type: 'function' | string;
-}
-
-export type MessageToolCallChunk = PartialDeep<MessageToolCall> & { index: number };
+import { MessageToolCall, MessageToolCallChunk } from './toolsCalling';
+import { ModelTokensUsage } from './usage';
 
 export type LLMRoleType = 'user' | 'system' | 'assistant' | 'function' | 'tool';
 
@@ -41,9 +21,15 @@ interface UserMessageContentPartImage {
   type: 'image_url';
 }
 
+interface UserMessageContentPartVideo {
+  type: 'video_url';
+  video_url: { url: string };
+}
+
 export type UserMessageContentPart =
   | UserMessageContentPartText
   | UserMessageContentPartImage
+  | UserMessageContentPartVideo
   | UserMessageContentPartThinking;
 
 export interface OpenAIChatMessage {
@@ -138,6 +124,10 @@ export interface ChatStreamPayload {
    */
   top_p?: number;
   truncation?: 'auto' | 'disabled';
+  /**
+   * @title Gemini URL 上下文获取工具开关
+   */
+  urlContext?: boolean;
   verbosity?: 'low' | 'medium' | 'high';
 }
 

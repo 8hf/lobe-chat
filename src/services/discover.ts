@@ -55,12 +55,15 @@ class DiscoverService {
 
   getAssistantList = async (params: AssistantQueryParams = {}): Promise<AssistantListResponse> => {
     const locale = globalHelpers.getCurrentLanguage();
-    return lambdaClient.market.getAssistantList.query({
-      ...params,
-      locale,
-      page: params.page ? Number(params.page) : 1,
-      pageSize: params.pageSize ? Number(params.pageSize) : 20,
-    });
+    return lambdaClient.market.getAssistantList.query(
+      {
+        ...params,
+        locale,
+        page: params.page ? Number(params.page) : 1,
+        pageSize: params.pageSize ? Number(params.pageSize) : 20,
+      },
+      { context: { showNotification: false } },
+    );
   };
 
   // ============================== MCP Market ==============================
@@ -143,6 +146,10 @@ class DiscoverService {
     errorCode,
     ...params
   }: InstallReportRequest) => {
+    // if user don't allow tracing, just not report installation
+    const allow = preferenceSelectors.userAllowTrace(useUserStore.getState());
+
+    if (!allow) return;
     await this.injectMPToken();
 
     const reportData = {
@@ -164,7 +171,8 @@ class DiscoverService {
    * 上报插件调用结果
    */
   reportPluginCall = async (reportData: CallReportRequest) => {
-    const allow = useUserStore(preferenceSelectors.userAllowTrace);
+    // if user don't allow tracing , just not report calling
+    const allow = preferenceSelectors.userAllowTrace(useUserStore.getState());
 
     if (!allow) return;
 
